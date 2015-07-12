@@ -9,6 +9,8 @@ antigen bundle bower
 antigen bundle npm
 antigen bundle grunt
 
+antigen bundle $DOTFILES/npm --no-local-clone
+
 antigen bundle mafredri/zsh-async
 antigen bundle sindresorhus/pure
 
