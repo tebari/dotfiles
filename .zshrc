@@ -3,6 +3,7 @@ export DOTFILES=~/.dotfiles
 source $DOTFILES/antigen/antigen.zsh
 
 antigen use oh-my-zsh
+antigen bundle git
 antigen bundle brew
 antigen bundle sudo
 antigen bundle bower
@@ -10,6 +11,9 @@ antigen bundle npm
 antigen bundle grunt
 
 antigen bundle $DOTFILES/npm --no-local-clone
+
+# Syntax highlighting bundle.
+antigen bundle zsh-users/zsh-syntax-highlighting
 
 antigen bundle mafredri/zsh-async
 antigen bundle sindresorhus/pure
