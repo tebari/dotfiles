@@ -1,0 +1,6 @@
+#Ignore files installed by fisher
+config/fish/functions/fisher.fish
+config/fish/completions/fisher.fish
+config/fish/functions/_pure_*
+config/fish/conf.d/_pure_*
+config/fish/conf.d/pure.fish
