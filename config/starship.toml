@@ -1,2 +1,6 @@
 [python]
 scan_for_pyfiles = false
+
+[aws]
+disabled = true
+
