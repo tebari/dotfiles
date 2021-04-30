@@ -1,5 +1,5 @@
 [python]
-scan_for_pyfiles = false
+detect_extensions = []
 
 [aws]
 disabled = true
