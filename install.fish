@@ -52,20 +52,40 @@ function createBackup
 	end
 end
 
+function runls
+	set sourcePath $argv[1]
+	set linkPath $argv[2]
+
+	# Create symlink using relative paths
+	if test -n "$DOTFILE_FORCE"
+		# with --force
+		run ln -sr --force $sourcePath $linkPath
+	else
+		run ln -sr $sourcePath $linkPath
+	end
+	success "Created symlink $sourcePath -> $linkPath"
+end
+
 function createLink
 	echo $argv | read -l sourcePath linkPath
 	if not test -e $sourcePath
 		warning "$sourcePath does not exist"
 		return 1
 	end
+
 	if test -L $linkPath
+		if test -n "$DOTFILE_FORCE"
+			warning "DOTFILE_FORCE enabled replacing existing symlink"
+			runls $sourcePath $linkPath
+			return 0
+		end
+
 		info "$linkPath is already a symlink, skipping"
 		return 0
 	end
 
 	if createBackup $linkPath
-		run ln -s $sourcePath $linkPath
-		success "Created symlink $sourcePath -> $linkPath"
+		runls $sourcePath $linkPath
 	end
 end
 
