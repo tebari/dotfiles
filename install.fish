@@ -55,14 +55,20 @@ end
 function runls
 	set sourcePath $argv[1]
 	set linkPath $argv[2]
-
+	
 	# Create symlink using relative paths
-	if test -n "$DOTFILE_FORCE"
-		# with --force
-		run ln -sr --force $sourcePath $linkPath
-	else
-		run ln -sr $sourcePath $linkPath
+	set opts "-sr"
+
+	if test -n "$DEBUG"
+		set opts {$opts}v
 	end
+
+	if test -n "$DOTFILE_FORCE"
+		# -n to not follow into symlinked directories
+		set opts {$opts}nf
+	end
+
+	run ln $opts $sourcePath $linkPath
 	success "Created symlink $sourcePath -> $linkPath"
 end
 
