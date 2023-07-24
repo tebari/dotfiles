@@ -18,5 +18,8 @@ return {
                 indent = {enable = true}
             })
         end
+    },
+    {
+        "nvim-treesitter/nvim-treesitter-context"
     }
 }
