@@ -5,3 +5,6 @@ config/fish/functions/_pure_*
 config/fish/conf.d/_pure_*
 config/fish/conf.d/pure.fish
 config/fish/fish_variables
+
+#Ignore installed tmux plugins
+config/tmux/plugins
