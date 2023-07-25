@@ -121,6 +121,19 @@ function linkXDGConfigs
 	createLinksInDirectory $dotConfigPath $configHome
 end
 
+function updateFishPlugins
+    if type -q fisher
+        if isDryRun
+            debug "Dry Run - fisher update"
+        else
+            fisher update
+        end
+        success "updating fish plugins"
+    else
+        warning "fisher not found, skipping update of fish plugins"
+    end
+end
+
 
 if isDryRun
 	info Dry run enabled
@@ -131,5 +144,7 @@ info "Bootstrapping..."
 # Symlinks
 createLinksInDirectory "$DOTFILES_ROOT/home" $HOME
 linkXDGConfigs
+
+updateFishPlugins
 
 success "Done!"
