@@ -5,11 +5,9 @@ background_opacity 0.98
 scrollback_lines 10000
 # wayland_titlebar_color background
 
-# Tab-bar Style
-include tab-bar-style.conf
 
 
 # BEGIN_KITTY_THEME
-# Catppuccin-Mocha
+# Rosé Pine
 include current-theme.conf
 # END_KITTY_THEME

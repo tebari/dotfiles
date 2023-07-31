@@ -1,1 +1,1 @@
-fish_config theme choose "Rosé Pine"
+fish_config theme choose "Catppuccin Mocha"
