@@ -1,0 +1,12 @@
+version: "3.8"
+name: tebari_dotfiles
+services:
+  dev_dotfiles:
+    container_name: dev_dotfiles
+    build:
+      context: ./
+    userns_mode: keep-id:uid=1000,gid=1000 
+    user: t
+    volumes:
+      - ../:/home/t/dotfiles
+    command: fish -C "./install.fish && exec fish"

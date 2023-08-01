@@ -1,0 +1,14 @@
+{
+	"name": "tebari_dotfiles",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"args": {}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"skyapps.fish-vscode"
+			]
+		}
+	}
+}
