@@ -52,12 +52,17 @@ function createBackup
 	end
 end
 
-function runls
+function runln
 	set sourcePath $argv[1]
 	set linkPath $argv[2]
 	
 	# Create symlink using relative paths
-	set opts "-sr"
+    switch (uname)
+        case Darwin
+            set opts "-s"
+        case '*'
+            set opts "-sr"
+    end
 
 	if test -n "$DEBUG"
 		set opts {$opts}v
@@ -82,7 +87,7 @@ function createLink
 	if test -L $linkPath
 		if test -n "$DOTFILE_FORCE"
 			warning "DOTFILE_FORCE enabled replacing existing symlink"
-			runls $sourcePath $linkPath
+			runln $sourcePath $linkPath
 			return 0
 		end
 
@@ -91,7 +96,7 @@ function createLink
 	end
 
 	if createBackup $linkPath
-		runls $sourcePath $linkPath
+		runln $sourcePath $linkPath
 	end
 end
 
