@@ -1,7 +1,7 @@
 return {
     {
         'VonHeikemen/lsp-zero.nvim',
-        branch = 'dev-v3'
+        branch = 'v3.x',
     },
     {'williamboman/mason.nvim'},
     {'williamboman/mason-lspconfig.nvim'},
@@ -21,8 +21,6 @@ return {
         'hrsh7th/nvim-cmp',
         dependencies = {
             'L3MON4D3/LuaSnip',
-            'saadparwaiz1/cmp_luasnip',
-
         }
     }
 }
