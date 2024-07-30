@@ -33,6 +33,9 @@ vim.opt.mouse = 'a'
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
 
+-- Set to true if you have a Nerd Font installed and selected in the terminal
+vim.g.have_nerd_font = true
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
