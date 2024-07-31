@@ -27,11 +27,11 @@ return {
         },
         keys = {
             { "<leader>,", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
-            { "<leader>/", TBuiltin("live_grep"), desc = "Grep (root dir)" },
+            { "<leader>/", "<cmd>Telescope live_grep<cr>", desc = "Grep (root dir)" },
             { "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
             { "<leader><space>", TBuiltin("files"), desc = "Find Files (root dir)" },
             { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
-            { "<leader>ff", TBuiltin("files"), desc = "Find Files (root dir)" },
+            { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "[F]ind [F]iles" },
             { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "[S]earch [K]eymaps" },
             {
                 "<leader>ss",
