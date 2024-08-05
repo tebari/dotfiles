@@ -9,7 +9,7 @@ return {
 				function()
 					require("conform").format({ async = true })
 				end,
-				mode = "",
+				mode = { "n", "v" },
 				desc = "Format Buffer",
 			},
 		},
@@ -19,6 +19,8 @@ return {
 				javascript = { "prettierd", "prettier", stop_after_first = true },
 				typescript = { "prettierd", "prettier", stop_after_first = true },
 				python = { "isort", "black" },
+				fish = { "fish_indent" },
+				sh = { "shfmt" },
 			},
 			default_format_opts = {
 				lsp_format = "fallback",
