@@ -1,0 +1,4 @@
+font-family = Cascadia Code
+theme = catppuccin-mocha.conf
+background-opacity = 0.95
+background-blur = true
