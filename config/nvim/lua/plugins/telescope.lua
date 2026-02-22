@@ -1,17 +1,18 @@
-function TBuiltin(builtin, opts)
-    local params = {builtin = builtin, opts = opts}
+local function TBuiltin(builtin_name, opts)
     return function()
-        builtin = params.builtin
-        opts = params.opts or {}
-        if builtin == "files" then
-            if vim.loop.fs_stat((opts.cwd or vim.loop.cwd()) .. "/.git") then
-                opts.show_untracked = true
-                builtin = "git_files"
+        local picker = builtin_name
+        local picker_opts = vim.deepcopy(opts or {})
+
+        if picker == "files" then
+            if vim.loop.fs_stat((picker_opts.cwd or vim.loop.cwd()) .. "/.git") then
+                picker_opts.show_untracked = true
+                picker = "git_files"
             else
-                builtin = "find_files"
+                picker = "find_files"
             end
         end
-        require("telescope.builtin")[builtin](opts)
+
+        require("telescope.builtin")[picker](picker_opts)
     end
 end
 
@@ -21,9 +22,9 @@ return {
         tag = "0.1.8",
         dependencies = {
             "nvim-lua/plenary.nvim",
-            { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+            { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
             -- Useful for getting pretty icons, but requires a Nerd Font.
-            { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+            { "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
         },
         keys = {
             { "<leader>,", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
@@ -50,7 +51,7 @@ return {
                     },
                 }),
                 desc = "Goto Symbol",
-            }
+            },
         },
         opts = {
             extensions = {
@@ -60,11 +61,11 @@ return {
                     override_file_sorter = true,
                     case_mode = "smart_case",
                 },
-            }
+            },
         },
         config = function(_, opts)
-            require('telescope').setup(opts)
-            require('telescope').load_extension('fzf')
-        end
-    }
+            require("telescope").setup(opts)
+            require("telescope").load_extension("fzf")
+        end,
+    },
 }

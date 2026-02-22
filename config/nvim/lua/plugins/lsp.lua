@@ -71,7 +71,7 @@ return {
 				formatting = lsp_zero.cmp_format({ details = true }),
 				snippet = {
 					expand = function(args)
-						vim.snippet.expand(args.body)
+						luasnip.lsp_expand(args.body)
 					end,
 				},
 			})
