@@ -1,11 +1,4 @@
 return {
-	{
-		"VonHeikemen/lsp-zero.nvim",
-		branch = "v4.x",
-		lazy = true,
-		config = false,
-	},
-
 	-- Autocompletion
 	{
 		"hrsh7th/nvim-cmp",
@@ -26,7 +19,6 @@ return {
 		},
 		config = function()
 			local cmp = require("cmp")
-			local lsp_zero = require("lsp-zero")
 			local luasnip = require("luasnip")
 
 			cmp.setup({
@@ -68,7 +60,6 @@ return {
 						end
 					end, { "i", "s" }),
 				}),
-				formatting = lsp_zero.cmp_format({ details = true }),
 				snippet = {
 					expand = function(args)
 						luasnip.lsp_expand(args.body)
@@ -87,47 +78,55 @@ return {
 			{ "hrsh7th/cmp-nvim-lsp" },
 			{ "williamboman/mason.nvim" },
 			{ "williamboman/mason-lspconfig.nvim" },
-			{ "j-hui/fidget.nvim" },
+			{ "j-hui/fidget.nvim", opts = {} },
 		},
 		config = function()
-			local lsp_zero = require("lsp-zero")
+			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-			-- lsp_attach is where you enable features that only work
-			-- if there is a language server active in the file
-			local lsp_attach = function(_, bufnr)
-				local opts = { buffer = bufnr }
+			vim.api.nvim_create_autocmd("LspAttach", {
+				group = vim.api.nvim_create_augroup("tebari-lsp-attach", { clear = true }),
+				callback = function(event)
+					local opts = { buffer = event.buf }
 
-				vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
-				vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", opts)
-				vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", opts)
-				vim.keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<cr>", opts)
-				vim.keymap.set("n", "go", "<cmd>lua vim.lsp.buf.type_definition()<cr>", opts)
-				vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>", opts)
-				vim.keymap.set("n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<cr>", opts)
-				vim.keymap.set("n", "<F2>", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
-				-- vim.keymap.set({ 'n', 'x' }, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
-				vim.keymap.set("n", "<F4>", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
-			end
-
-			lsp_zero.extend_lspconfig({
-				sign_text = true,
-				lsp_attach = lsp_attach,
-				capabilities = require("cmp_nvim_lsp").default_capabilities(),
+					vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+					vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+					vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+					vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+					vim.keymap.set("n", "go", vim.lsp.buf.type_definition, opts)
+					vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+					vim.keymap.set("n", "gs", vim.lsp.buf.signature_help, opts)
+					vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, opts)
+					vim.keymap.set("n", "<F4>", vim.lsp.buf.code_action, opts)
+				end,
 			})
 
-			require("mason").setup({})
+			require("mason").setup()
+
 			require("mason-lspconfig").setup({
-				handlers = {
-					function(server_name)
-						require("lspconfig")[server_name].setup({})
-					end,
-					lua_ls = function()
-						require("lspconfig").lua_ls.setup({
-							on_init = function(client)
-								lsp_zero.nvim_lua_settings(client, {})
-							end,
-						})
-					end,
+				automatic_enable = true,
+			})
+
+			vim.lsp.config("*", {
+				capabilities = capabilities,
+			})
+
+			vim.lsp.config("lua_ls", {
+				settings = {
+					Lua = {
+						completion = {
+							callSnippet = "Replace",
+						},
+						diagnostics = {
+							globals = { "vim" },
+						},
+						workspace = {
+							checkThirdParty = false,
+							library = vim.api.nvim_get_runtime_file("", true),
+						},
+						telemetry = {
+							enable = false,
+						},
+					},
 				},
 			})
 		end,
