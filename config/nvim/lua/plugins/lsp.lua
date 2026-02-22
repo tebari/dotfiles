@@ -105,7 +105,9 @@ return {
 			require("mason").setup()
 
 			require("mason-lspconfig").setup({
-				automatic_enable = true,
+				automatic_enable = {
+					exclude = { "rust_analyzer" },
+				},
 				ensure_installed = {
 					"lua_ls",
 					"ts_ls",
