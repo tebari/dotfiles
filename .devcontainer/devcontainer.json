@@ -1,8 +1,9 @@
 {
-	"name": "tebari_dotfiles",
-	"build": {
-		"dockerfile": "Dockerfile",
-		"args": {}
+	"image": "mcr.microsoft.com/devcontainers/base:trixie",
+	"features": {
+		"ghcr.io/meaningful-ooo/devcontainer-features/fish:2": {
+            "version": "2.0.0"
+        }
 	},
 	"customizations": {
 		"vscode": {

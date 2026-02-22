@@ -1,8 +1,14 @@
 
-ARG VARIANT="base-devel"
-FROM docker.io/archlinux:$VARIANT
+ARG VARIANT="latest"
+FROM docker.io/archlinux/archlinux:$VARIANT
 
-RUN pacman -Sy --noconfirm \
+# Initialize pacman keyring and upgrade system
+RUN pacman-key --init && \
+    pacman-key --populate archlinux && \
+    pacman -Sy --needed --noconfirm --disable-download-timeout archlinux-keyring && \
+    pacman -Su --noconfirm --disable-download-timeout
+
+RUN pacman -S --noconfirm \
     fish \
     starship \
     bat \
@@ -11,10 +17,10 @@ RUN pacman -Sy --noconfirm \
     git \
     nodejs \
     npm \
+    openssh \
     yarn 
 
 RUN groupadd -g 1000 t
 RUN useradd -u 1000 -g 1000 -m -s /usr/bin/fish t
 USER t
 RUN mkdir /home/t/dotfiles
-WORKDIR /home/t/dotfiles
