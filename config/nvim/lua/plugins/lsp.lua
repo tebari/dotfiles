@@ -78,6 +78,7 @@ return {
 			{ "hrsh7th/cmp-nvim-lsp" },
 			{ "williamboman/mason.nvim" },
 			{ "williamboman/mason-lspconfig.nvim" },
+			{ "WhoIsSethDaniel/mason-tool-installer.nvim" },
 			{ "j-hui/fidget.nvim", opts = {} },
 		},
 		config = function()
@@ -104,6 +105,36 @@ return {
 
 			require("mason-lspconfig").setup({
 				automatic_enable = true,
+				ensure_installed = {
+					"lua_ls",
+					"ts_ls",
+					"cssls",
+					"bashls",
+					"jdtls",
+					"pyright",
+					"kotlin_language_server",
+					"rust_analyzer",
+				},
+			})
+
+			require("mason-tool-installer").setup({
+				ensure_installed = {
+					-- linters
+					"eslint_d",
+					"shellcheck",
+					"markdownlint",
+					"ruff",
+					"ktlint",
+					"checkstyle",
+					"stylelint",
+					-- formatters (referenced by conform.nvim)
+					"stylua",
+					"prettierd",
+					"black",
+					"isort",
+					"shfmt",
+					"google-java-format",
+				},
 			})
 
 			vim.lsp.config("*", {

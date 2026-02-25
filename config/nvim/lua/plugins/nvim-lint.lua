@@ -7,6 +7,13 @@ return {
 			lint.linters_by_ft = {
 				markdown = { "markdownlint" },
 				fish = { "fish" },
+				typescript = { "eslint_d" },
+				javascript = { "eslint_d" },
+				css = { "stylelint" },
+				sh = { "shellcheck" },
+				python = { "ruff" },
+				kotlin = { "ktlint" },
+				java = { "checkstyle" },
 			}
 
 			-- To allow other plugins to add linters to require('lint').linters_by_ft,
