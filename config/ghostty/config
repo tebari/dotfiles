@@ -5,3 +5,5 @@ background-opacity = 0.95
 background-blur = true
 
 shell-integration-features = true 
+
+config-file = ?config.local
