@@ -80,6 +80,7 @@ return {
 			{ "williamboman/mason-lspconfig.nvim" },
 			{ "WhoIsSethDaniel/mason-tool-installer.nvim" },
 			{ "j-hui/fidget.nvim", opts = {} },
+			{ "b0o/SchemaStore.nvim" },
 		},
 		config = function()
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -114,6 +115,8 @@ return {
 					"pyright",
 					"kotlin_language_server",
 					"rust_analyzer",
+					"jsonls",
+					"groovyls",
 				},
 			})
 
@@ -157,6 +160,15 @@ return {
 						telemetry = {
 							enable = false,
 						},
+					},
+				},
+			})
+
+			vim.lsp.config("jsonls", {
+				settings = {
+					json = {
+						schemas = require("schemastore").json.schemas(),
+						validate = { enable = true },
 					},
 				},
 			})

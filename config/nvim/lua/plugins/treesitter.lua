@@ -20,6 +20,7 @@ return {
                 "markdown_inline",
                 "query",
                 "vimdoc",
+                "groovy",
             },
             auto_install = true,
             highlight = { enable = true },

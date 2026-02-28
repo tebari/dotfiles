@@ -25,6 +25,7 @@ return {
 				rust = { "rustfmt" },
 				fish = { "fish_indent" },
 				sh = { "shfmt" },
+			json = { "prettierd", "prettier", stop_after_first = true },
 			},
 			default_format_opts = {
 				lsp_format = "fallback",
