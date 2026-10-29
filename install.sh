@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# Inside a devcontainer, install Homebrew and the CLI tools first (includes fish)
+if [ -n "$REMOTE_CONTAINERS" ] || [ -n "$CODESPACES" ] || [ -f /.dockerenv ]; then
+    echo "Devcontainer detected. Installing CLI tools..."
+    bash "$(dirname "$0")/devcontainer-install-tools.sh" || exit 1
+
+    # Make brew-installed tools (fish) visible to this shell
+    if [ -x /home/linuxbrew/.linuxbrew/bin/brew ]; then
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    fi
+fi
+
 # Check if fish shell is installed
 if command -v fish &> /dev/null; then
     echo "Fish shell detected. Running install.fish..."
