@@ -24,11 +24,6 @@ TOOLS=(
 info() { echo "[ .. ] $*"; }
 warn() { echo "[WARN] $*" >&2; }
 
-if [ "$(id -u)" -eq 0 ]; then
-    warn "Homebrew cannot be installed as root. Run this script as a non-root user."
-    exit 1
-fi
-
 find_brew() {
     if command -v brew &> /dev/null; then
         command -v brew
@@ -57,8 +52,10 @@ install_prerequisites() {
     fi
 
     info "Installing prerequisites: ${missing[*]}"
-    sudo apt-get update
-    sudo apt-get install -y "${missing[@]}"
+    local sudo=sudo
+    [ "$(id -u)" -eq 0 ] && sudo=
+    $sudo apt-get update
+    $sudo apt-get install -y "${missing[@]}"
 }
 
 if BREW="$(find_brew)"; then
