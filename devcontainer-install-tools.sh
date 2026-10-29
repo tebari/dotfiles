@@ -3,6 +3,11 @@
 
 set -euo pipefail
 
+# Never prompt: Homebrew installer, apt and brew all run unattended
+export NONINTERACTIVE=1
+export DEBIAN_FRONTEND=noninteractive
+export HOMEBREW_NO_ENV_HINTS=1
+
 TOOLS=(
     fish
     fisher
@@ -52,7 +57,8 @@ install_prerequisites() {
     fi
 
     info "Installing prerequisites: ${missing[*]}"
-    local sudo=sudo
+    # sudo -n fails instead of hanging on a password prompt
+    local sudo="sudo -n"
     [ "$(id -u)" -eq 0 ] && sudo=
     $sudo apt-get update
     $sudo apt-get install -y "${missing[@]}"
@@ -63,7 +69,7 @@ if BREW="$(find_brew)"; then
 else
     info "Homebrew not found, installing..."
     install_prerequisites
-    NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     BREW="$(find_brew)"
 fi
 
