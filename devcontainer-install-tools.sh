@@ -7,6 +7,8 @@ set -euo pipefail
 export NONINTERACTIVE=1
 export DEBIAN_FRONTEND=noninteractive
 export HOMEBREW_NO_ENV_HINTS=1
+# brew install asks "Do you want to proceed with installation?" when it pulls in dependencies
+export HOMEBREW_NO_ASK=1
 
 TOOLS=(
     fish
@@ -82,7 +84,7 @@ for tool in "${TOOLS[@]}"; do
         skipped+=("$tool")
     else
         info "Installing $tool"
-        brew install "$tool"
+        brew install "$tool" < /dev/null
         installed+=("$tool")
     fi
 done
